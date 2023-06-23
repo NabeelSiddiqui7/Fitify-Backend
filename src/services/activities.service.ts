@@ -14,14 +14,14 @@ import { User } from "../interfaces/user.interface";
         });
         app = express();
 
-    public async addActivity(description: any): Promise<any> {
-        await this.db('daily_activities').insert({id:1, description: description, completed: false});
+    public async addActivity(name: any, category:any, description:any): Promise<any> {
+        await this.db('daily_activities').insert({id:1, name: name, completed: false, category:category, description:description});
     }
-    public async updateActivity(description: any, completed:any): Promise<any> {
-        await this.db('daily_activities').where({description:description}).update({completed: completed}).orderBy("activity_id", "asc").then();
+    public async updateActivity(name: any, completed:any): Promise<any> {
+        await this.db('daily_activities').where({name:name}).update({completed: completed}).orderBy("activity_id", "asc").then();
     }
-    public async deleteActivity(description: any): Promise<any> {
-        await this.db('daily_activities').where({description:description}).del().then();
+    public async deleteActivity(activity_id: any): Promise<any> {
+        await this.db('daily_activities').where({activity_id:activity_id}).del().then();
     }
   }
   

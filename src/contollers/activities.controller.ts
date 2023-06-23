@@ -8,8 +8,10 @@ class ActivitiesController {
 
   public addActivity = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        const name: string | undefined = req.query.name?.toString();
+        const category: string | undefined = req.query.category?.toString();
         const description: string | undefined = req.query.description?.toString();
-        const activityData = await this.activitiesService.addActivity(description);
+        const activityData = await this.activitiesService.addActivity(name, category, description);
         res.status(200).json(activityData);
     } catch (error) {
       next(error);
@@ -18,9 +20,9 @@ class ActivitiesController {
 
   public updateActivity = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const description: string | undefined = req.query.description?.toString();
+        const name: string | undefined = req.query.name?.toString();
         const completed: boolean | undefined = (req.query.completed?.toString() == "true");
-        const userData = await this.activitiesService.updateActivity(description, Boolean(completed));
+        const userData = await this.activitiesService.updateActivity(name, Boolean(completed));
         res.status(200).json(userData);
     } catch (error) {
       next(error);
@@ -29,8 +31,8 @@ class ActivitiesController {
 
   public deleteActivity = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const description: string | undefined = req.query.description?.toString();
-        const userData = await this.activitiesService.deleteActivity(description);
+        const activity_id: number | undefined = Number(req.query.activity_id);
+        const userData = await this.activitiesService.deleteActivity(activity_id);
         res.status(200).json(userData);
     } catch (error) {
       next(error);

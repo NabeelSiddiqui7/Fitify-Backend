@@ -18,18 +18,27 @@ import { User } from "../interfaces/user.interface";
             UserData,
             WeightData,
             DailyActivities,
+            WeeklySummary,
+            DailyFood,
+            DailyWorkout,
         ]:
         [
+            any,
+            any,
+            any,
             any,
             any,
             any,
         ] 
         =[ 
             await this.db('users'),
-            await this.db('weights').orderBy("record_date", "asc"),
-            await this.db('daily_activities')
+            await this.db('weights').orderBy("record_date", "desc").limit(7),
+            await this.db('daily_activities'),
+            await this.db('weekly_summary'),
+            await this.db('daily_food'),
+            await this.db('daily_workout')
         ];
-        return {UserData, WeightData, DailyActivities};
+        return {UserData, WeightData, DailyActivities, WeeklySummary, DailyFood, DailyWorkout};
     }
   }
   
