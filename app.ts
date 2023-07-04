@@ -1,6 +1,7 @@
 import { Routes } from './src/interfaces/routes.interface';
 import cors from 'cors';
 import express from 'express';
+const cookieParser = require('cookie-parser');
 class App {
   public app: express.Application;
   public port: string | number;
@@ -9,10 +10,14 @@ class App {
 
   constructor(routes: Routes[]) {
     this.app = express();
-    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
+    this.app.use(cookieParser());
     // CORS implemented so that we don't get errors when trying to access the server from a different server location
-    this.app.use(cors());
+    this.app.use(cors({
+      origin: 'http://localhost:3000',
+      credentials: true,
+    }));
 
     this.port = process.env.PORT || 5000;
     this.env = process.env.NODE_ENV || 'development';
