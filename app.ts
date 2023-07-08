@@ -15,7 +15,7 @@ class App {
     this.app.use(cookieParser());
     // CORS implemented so that we don't get errors when trying to access the server from a different server location
     this.app.use(cors({
-      origin: 'http://localhost:3000',
+      origin: 'https://fitify-api.onrender.com/',
       credentials: true,
     }));
 
