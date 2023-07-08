@@ -44,6 +44,9 @@ class UserService {
             if (user.password != password) {
                 throw new Error("Password does not match");
             }
+            if (user.id.type != 'number') {
+                user.id = parseInt(user.id.split('')[1]);
+            }
             //Otherwise create Refresh and Access token
             const accessToken = createAccessToken(user.id);
             const refreshToken = createRefreshToken(user.id);
