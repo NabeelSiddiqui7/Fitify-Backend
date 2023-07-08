@@ -19,7 +19,7 @@ class WeightService {
         await this.db('weights').insert({ id: 1, weight: weight, record_date: date });
     }
     public async updateWeight(id: any, weight: any, date: any): Promise<any> {
-        await this.db('weights').where({ id: id, record_date: date }).update({ weight: weight }).then();
+        await this.db('weights').where({ id: 1, record_date: date }).update({ weight: weight }).then();
     }
 }
 
