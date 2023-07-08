@@ -46,7 +46,7 @@ class UserService {
             }
             if (user.id.type != 'number') {
                 // user.id = parseInt(user.id.split('')[1]);
-                console.log(user.id);
+                // console.log(user.id);
             }
             //Otherwise create Refresh and Access token
             const accessToken = createAccessToken(user.id);
@@ -84,6 +84,7 @@ class UserService {
     public async getAccessToken(res: any, req: any): Promise<any> {
         const token = req.cookies.refreshtoken;
         if (!token) {
+            console.log("error1")
             res.send({
                 accesstoken: ""
             });
@@ -94,6 +95,7 @@ class UserService {
         try {
             payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
         } catch (error: any) {
+            console.log("error2")
             res.send({
                 accesstoken: ""
             });
@@ -107,12 +109,14 @@ class UserService {
         });
 
         if (!user) {
+            console.log("error3")
             res.send({
                 accesstoken: ""
             });
             return;
         }
         if (user.refreshtoken !== token) {
+            console.log("error4")
             res.send({
                 accesstoken: ""
             });
