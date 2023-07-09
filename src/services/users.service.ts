@@ -135,10 +135,7 @@ class UserService {
     }
 
     public async getUserData(id: any): Promise<any> {
-        console.log("pee")
-        console.log(typeof (id));
-        const num = id;
-        console.log(num)
+        console.log((id));
         const [
             UserData,
             WeightData,
@@ -156,12 +153,12 @@ class UserService {
                 any,
             ]
             = [
-                await this.db('users').where({ id: num }),
-                await this.db('weights').where({ id: num }).orderBy("record_date", "desc").limit(7),
-                await this.db('daily_activities').where({ id: num }),
-                await this.db('weekly_summary').where({ id: num }),
-                await this.db('daily_food').where({ id: num }),
-                await this.db('daily_workout').where({ id: num })
+                await this.db('users').where({ id: id }),
+                await this.db('weights').where({ id: id }).orderBy("record_date", "desc").limit(7),
+                await this.db('daily_activities').where({ id: id }),
+                await this.db('weekly_summary').where({ id: id }),
+                await this.db('daily_food').where({ id: id }),
+                await this.db('daily_workout').where({ id: id })
             ];
         return { UserData, WeightData, DailyActivities, WeeklySummary, DailyFood, DailyWorkout };
     }
