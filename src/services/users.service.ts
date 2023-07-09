@@ -52,8 +52,8 @@ class UserService {
             const refreshToken = createRefreshToken(user.id);
             //Add to database
             user.refreshToken = refreshToken;
-            await this.db('users').where({ id: user.id }).update('refreshtoken', refreshToken);
-            await this.db('users').where({ id: user.id }).update('accesstoken', accessToken);
+            await this.db('users').where({ id: 1 }).update('refreshtoken', refreshToken);
+            await this.db('users').where({ id: 1 }).update('accesstoken', accessToken);
             //Send tokens
             sendRefreshToken(res, refreshToken);
             sendAccessToken(res, req, accessToken);
@@ -81,7 +81,7 @@ class UserService {
     }
 
     public async getAccessToken(res: any, req: any): Promise<any> {
-        const token = req.cookies.refreshtoken || 123;
+        const token = req.cookies.refreshtoken;
         if (!token) {
             console.log("error1")
             res.send({
@@ -92,7 +92,7 @@ class UserService {
 
         let payload: any = null;
         try {
-            // payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
+            payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
         } catch (error: any) {
             console.log("error2")
             res.send({
@@ -103,7 +103,7 @@ class UserService {
         }
         let user: any;
 
-        await this.db('users').where({ id: payload.id }).then((res) => {
+        await this.db('users').where({ id: 1 }).then((res) => {
             user = res.at(0);
         });
 
@@ -121,13 +121,11 @@ class UserService {
             });
             return;
         }
-        console.log("getAccessToken");
-
         const accesstoken = createAccessToken(user.id);
         const refreshToken = createRefreshToken(user.id);
-        await this.db('users').where({ id: user.id }).update('refreshtoken', refreshToken).then(() => {
+        await this.db('users').where({ id: 1 }).update('refreshtoken', refreshToken).then(() => {
             sendRefreshToken(res, refreshToken);
-            res.send({ accesstoken, id: user.id, email: user.email, username: user.username });
+            res.send({ accesstoken, id: 1, email: user.email, username: user.username });
             return;
         });
 
@@ -152,12 +150,12 @@ class UserService {
                 any,
             ]
             = [
-                await this.db('users').where({ id: id }),
-                await this.db('weights').where({ id: id }).orderBy("record_date", "desc").limit(7),
-                await this.db('daily_activities').where({ id: id }),
-                await this.db('weekly_summary').where({ id: id }),
-                await this.db('daily_food').where({ id: id }),
-                await this.db('daily_workout').where({ id: id })
+                await this.db('users').where({ id: 1 }),
+                await this.db('weights').where({ id: 1 }).orderBy("record_date", "desc").limit(7),
+                await this.db('daily_activities').where({ id: 1 }),
+                await this.db('weekly_summary').where({ id: 1 }),
+                await this.db('daily_food').where({ id: 1 }),
+                await this.db('daily_workout').where({ id: 1 })
             ];
         return { UserData, WeightData, DailyActivities, WeeklySummary, DailyFood, DailyWorkout };
     }
