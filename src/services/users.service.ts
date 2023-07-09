@@ -114,13 +114,13 @@ class UserService {
             });
             return;
         }
-        // if (user.refreshtoken !== token) {
-        //     console.log("error4")
-        //     res.send({
-        //         accesstoken: ""
-        //     });
-        //     return;
-        // }
+        if (user.refreshtoken !== token) {
+            console.log("error4")
+            res.send({
+                accesstoken: ""
+            });
+            return;
+        }
         console.log("cum");
         console.log(typeof (user.id));
 
