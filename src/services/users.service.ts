@@ -44,17 +44,17 @@ class UserService {
             if (user.password != password) {
                 throw new Error("Password does not match");
             }
-            if (user.id.type != 'number') {
+            if (typeof (user.id) != 'number') {
                 // user.id = parseInt(user.id.split('')[1]);
-                // console.log(user.id);
+                console.log(typeof (user.id));
             }
             //Otherwise create Refresh and Access token
             const accessToken = createAccessToken(user.id);
             const refreshToken = createRefreshToken(user.id);
             //Add to database
             user.refreshToken = refreshToken;
-            await this.db('users').where({ id: 1 }).update('refreshtoken', refreshToken);
-            await this.db('users').where({ id: 1 }).update('accesstoken', accessToken);
+            await this.db('users').where({ id: user.id }).update('refreshtoken', refreshToken);
+            await this.db('users').where({ id: user.id }).update('accesstoken', accessToken);
             //Send tokens
             sendRefreshToken(res, refreshToken);
             sendAccessToken(res, req, accessToken);
@@ -104,7 +104,7 @@ class UserService {
         }
         let user: any;
 
-        await this.db('users').where({ id: 1 }).then((res) => {
+        await this.db('users').where({ id: payload.id }).then((res) => {
             user = res.at(0);
         });
 
@@ -115,19 +115,19 @@ class UserService {
             });
             return;
         }
-        if (user.refreshtoken !== token) {
-            console.log("error4")
-            res.send({
-                accesstoken: ""
-            });
-            return;
-        }
+        // if (user.refreshtoken !== token) {
+        //     console.log("error4")
+        //     res.send({
+        //         accesstoken: ""
+        //     });
+        //     return;
+        // }
 
         const accesstoken = createAccessToken(user.id);
         const refreshToken = createRefreshToken(user.id);
-        await this.db('users').where({ id: 1 }).update('refreshtoken', refreshToken).then(() => {
+        await this.db('users').where({ id: user.id }).update('refreshtoken', refreshToken).then(() => {
             sendRefreshToken(res, refreshToken);
-            res.send({ accesstoken, id: 1, email: user.email, username: user.username });
+            res.send({ accesstoken, id: user.id, email: user.email, username: user.username });
             return;
         });
 
@@ -151,12 +151,12 @@ class UserService {
                 any,
             ]
             = [
-                await this.db('users').where({ id: 1 }),
-                await this.db('weights').where({ id: 1 }).orderBy("record_date", "desc").limit(7),
-                await this.db('daily_activities').where({ id: 1 }),
-                await this.db('weekly_summary').where({ id: 1 }),
-                await this.db('daily_food').where({ id: 1 }),
-                await this.db('daily_workout').where({ id: 1 })
+                await this.db('users').where({ id: id }),
+                await this.db('weights').where({ id: id }).orderBy("record_date", "desc").limit(7),
+                await this.db('daily_activities').where({ id: id }),
+                await this.db('weekly_summary').where({ id: id }),
+                await this.db('daily_food').where({ id: id }),
+                await this.db('daily_workout').where({ id: id })
             ];
         return { UserData, WeightData, DailyActivities, WeeklySummary, DailyFood, DailyWorkout };
     }
