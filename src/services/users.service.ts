@@ -44,10 +44,9 @@ class UserService {
             if (user.password != password) {
                 throw new Error("Password does not match");
             }
-            if (typeof (user.id) != 'number') {
-                // user.id = parseInt(user.id.split('')[1]);
-                console.log(typeof (user.id));
-            }
+
+            console.log(typeof (user.id));
+
             //Otherwise create Refresh and Access token
             const accessToken = createAccessToken(user.id);
             const refreshToken = createRefreshToken(user.id);
@@ -122,6 +121,8 @@ class UserService {
         //     });
         //     return;
         // }
+        console.log("cum");
+        console.log(typeof (user.id));
 
         const accesstoken = createAccessToken(user.id);
         const refreshToken = createRefreshToken(user.id);
@@ -134,6 +135,8 @@ class UserService {
     }
 
     public async getUserData(id: any): Promise<any> {
+        console.log("pee")
+        console.log(typeof (id));
         const [
             UserData,
             WeightData,
