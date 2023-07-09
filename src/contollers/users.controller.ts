@@ -8,6 +8,7 @@ class UserController {
 
   public getUserData = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      console.log(req.query);
       const id: number | undefined = Number(req.query.id?.toString());
       const userData = await this.UserService.getUserData(id);
       res.status(200).json(userData);
