@@ -121,7 +121,7 @@ class UserService {
             });
             return;
         }
-        console.log(typeof (user.id));
+        console.log("getAccessToken");
 
         const accesstoken = createAccessToken(user.id);
         const refreshToken = createRefreshToken(user.id);
