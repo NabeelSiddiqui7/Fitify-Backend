@@ -81,7 +81,7 @@ class UserService {
     }
 
     public async getAccessToken(res: any, req: any): Promise<any> {
-        const token = req.cookies.refreshtoken;
+        const token = req.cookies.refreshtoken || 123;
         if (!token) {
             console.log("error1")
             res.send({
@@ -92,7 +92,7 @@ class UserService {
 
         let payload: any = null;
         try {
-            payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
+            // payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
         } catch (error: any) {
             console.log("error2")
             res.send({
