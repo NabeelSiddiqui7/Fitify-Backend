@@ -121,7 +121,6 @@ class UserService {
             });
             return;
         }
-        console.log("cum");
         console.log(typeof (user.id));
 
         const accesstoken = createAccessToken(user.id);
@@ -135,7 +134,7 @@ class UserService {
     }
 
     public async getUserData(id: any): Promise<any> {
-        console.log((id));
+        console.log(id);
         const [
             UserData,
             WeightData,
