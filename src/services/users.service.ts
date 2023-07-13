@@ -84,6 +84,7 @@ class UserService {
         const token = req.cookies.refreshtoken;
         if (!token) {
             console.log("error1")
+            console.log(req.cookies);
             res.send({
                 accesstoken: ""
             });

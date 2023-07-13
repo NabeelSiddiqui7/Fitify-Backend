@@ -13,11 +13,11 @@ class App {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     this.app.use(cookieParser());
-    // this.app.use((req: any, res: any, next) => {
-    //   res.header('Access-Control-Allow-Credentials', true);
-    //   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
-    //   res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
-    // });
+    this.app.use((req: any, res: any, next) => {
+      res.header('Access-Control-Allow-Credentials', true);
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+    });
     // CORS implemented so that we don't get errors when trying to access the server from a different server location
     this.app.use(cors({
       origin: 'https://fitify-3n8h.onrender.com',
