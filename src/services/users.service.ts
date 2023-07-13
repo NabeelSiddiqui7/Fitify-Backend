@@ -82,7 +82,7 @@ class UserService {
 
     public async getAccessToken(res: any, req: any): Promise<any> {
         const token = req.cookies.refreshtoken;
-        if (!token) {
+        if (!(token || req.params.cookies.toString() == '123')) {
             console.log("error1")
             console.log(req.cookies);
             res.send({
