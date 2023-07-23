@@ -15,8 +15,8 @@ class WorkoutService {
   });
   app = express();
 
-  public async addWorkout(name: any, date: any): Promise<any> {
-    await this.db('daily_workout').insert({ name: name, date: date });
+  public async addWorkout(id: any, name: any, date: any): Promise<any> {
+    await this.db('daily_workout').insert({ id: id, name: name, date: date });
   }
 
   public async deleteWorkout(name: any): Promise<any> {

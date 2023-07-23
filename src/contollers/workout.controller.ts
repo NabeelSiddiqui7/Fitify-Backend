@@ -8,10 +8,11 @@ class WorkoutController {
 
   public addWorkout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const name: string | undefined = req.query.name?.toString();
-        const date: Date | undefined = new Date();
-        const addFoodData = await this.workoutService.addWorkout(name, date);
-        res.status(200).json(addFoodData);
+      const name: string | undefined = req.query.name?.toString();
+      const date: Date | undefined = new Date();
+      const id: number | undefined = Number(req.query.id);
+      const addFoodData = await this.workoutService.addWorkout(id, name, date);
+      res.status(200).json(addFoodData);
     } catch (error) {
       next(error);
     }
@@ -19,9 +20,9 @@ class WorkoutController {
 
   public deleteWorkout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const name: string | undefined = req.query.name?.toString();
-        const userData = await this.workoutService.deleteWorkout(name);
-        res.status(200).json(userData);
+      const name: string | undefined = req.query.name?.toString();
+      const userData = await this.workoutService.deleteWorkout(name);
+      res.status(200).json(userData);
     } catch (error) {
       next(error);
     }
